@@ -1,0 +1,21 @@
+name: Build
+
+on:                # это описание события, по которому будет запускаться наш скрипт
+  pull_request:    # говорит о том, что этот workflow нужно запускать при каждом пуше в мастер и создании пулл-реквестов.
+    branches:
+      - '*'
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04           # тут мы можем выбрать целевую ОС
+    steps:
+      - uses: actions/checkout@v1   # позволяет переиспользовать другие экшены
+      - name: set up JDK 11
+        uses: actions/setup-java@v1 # так например при помощи экшена actions/setup-java мы устанавливаем окружение для Java 11.
+        with:                       # При помощи with мы можем указать параметры с которыми запускаем действие,
+          java-version: 1.11        # по сути это аргументы, которые будут передаваться в экшен.
+      - name: Maven Package
+        run: mvn -B clean package -DskipTests
