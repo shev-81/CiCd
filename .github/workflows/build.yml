@@ -10,7 +10,7 @@ on:                # это описание события, по котором
 
 jobs:
   build:
-    runs-on: ubuntu-18.04           # тут мы можем выбрать целевую ОС
+    runs-on: ubuntu-20.04(ubuntu-latest)    # тут мы можем выбрать целевую ОС
     steps:
       - uses: actions/checkout@v1   # позволяет переиспользовать другие экшены
       - name: set up JDK 11
