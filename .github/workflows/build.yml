@@ -9,13 +9,47 @@ on:                # это описание события, по котором
       - 'master'
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04    # тут мы можем выбрать целевую ОС
+  compile:
+    runs-on: ubuntu-20.04               # тут мы можем выбрать целевую ОС
+    strategy:
+      matrix:
+        java: [ 11, 12, 13, 17 ]
+    name: Java ${{ matrix.java }} compile
     steps:
-      - uses: actions/checkout@v1   # позволяет переиспользовать другие экшены
-      - name: set up JDK 11
-        uses: actions/setup-java@v1 # так например при помощи экшена actions/setup-java мы устанавливаем окружение для Java 11.
-        with:                       # При помощи with мы можем указать параметры с которыми запускаем действие,
-          java-version: 1.11        # по сути это аргументы, которые будут передаваться в экшен.
-      - name: Maven Package
+      - name: Checkout Source Code
+        uses: actions/checkout@v2       # позволяет переиспользовать другие экшены
+      - name: Setup Java
+        uses: actions/setup-java@v2     # так например при помощи экшена actions/setup-java мы устанавливаем окружение для Java 17.
+        with:                           # При помощи with мы можем указать параметры с которыми запускаем действие,
+          distribution: 'adopt'         # по сути это аргументы, которые будут передаваться в экшен.
+          java-package: jdk
+          java-version: ${{ matrix.java }}
+      - name: Compile the Project
+        working-directory: github-actions-java-maven
         run: mvn -B clean package -DskipTests
+  build:
+    runs-on: ubuntu-20.04
+    needs: compile
+    name: Build the Maven Project
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+          java-package: jdk
+      - name: Build and test project
+        working-directory: github-actions-java-maven
+        run: mvn -B verify
+      - name: Upload Maven build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact.jar
+          path: github-actions-java-maven/target/github-actions-java-maven.jar
