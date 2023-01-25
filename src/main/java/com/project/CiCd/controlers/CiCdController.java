@@ -10,4 +10,9 @@ public class CiCdController {
     public String ping(){
         return "Привет я работаю";
     }
+
+    @GetMapping("/test")
+    public String work(){
+        return "test test test test test";
+    }
 }
