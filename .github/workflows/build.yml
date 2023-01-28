@@ -8,7 +8,7 @@ on:                               # это описание события, по
     branches:
       - 'master'
 env:
-  IMAGE_NAME: cicd
+  IMAGE_NAME: cicd:0.0.1-SNAPSHOT
 
 jobs:
   build:
