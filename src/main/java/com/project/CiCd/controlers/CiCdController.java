@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CiCdController {
 
+    /**
+     * Hello i am work!
+     * @return
+     */
     @GetMapping
     public String ping(){
         return "Привет я работаю";
