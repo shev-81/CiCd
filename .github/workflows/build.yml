@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: set up JDK 11
-        uses: actions/setup-java@v2   # позволяет переиспользовать другие экшены, так например при помощи экшена actions/setup-java мы устанавливаем окружение для Java 11
+        uses: actions/setup-java@v1   # позволяет переиспользовать другие экшены, так например при помощи экшена actions/setup-java мы устанавливаем окружение для Java 11
         with:                         # При помощи with мы можем указать параметры с которыми запускаем действие, по сути это аргументы, которые будут передаваться в экшен.
           java-version: 11
       - name: Login to GitHub Container Registry
