@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.project</groupId>
-	<artifactId>CiCd</artifactId>
+	<artifactId>cicd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CiCd</name>
 	<description>CiCd project</description>
@@ -68,6 +68,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
