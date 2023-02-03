@@ -6,6 +6,13 @@ name: Maven Package
 on:
   release:
     types: [created]
+                                # это описание события, по которому будет запускаться наш скрипт.
+  pull_request:                   # говорит о том, что этот workflow нужно запускать при каждом пуше в мастер и создании пулл-реквестов.
+    branches:
+      - '*'
+  push:
+    branches:
+      - 'master'
 
 jobs:
   build:
